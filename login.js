@@ -1,12 +1,7 @@
-// =============================================================================
-// MDT312 Assignment 6 login.js
-// Modernized: ES6 (const/let), event.preventDefault(), and for loop
-// =============================================================================
-
 window.onload = loginLoad;
 
 function loginLoad() {
-    
+    document.getElementById("myLogin").onsubmit = checkLogin;
 }
 
 function checkLogin(event) {
@@ -18,11 +13,12 @@ function checkLogin(event) {
     // 2. ดึงข้อมูลจาก localStorage ทีละตัว แล้วนำมาใส่ใน Array 
     const users = [{username: "admin", password: "123456"}]; // เพิ่มผู้ใช้ default ไว้แล้ว
 
-    
+    const storedUsername = localStorage.getItem("username");
+    const storedPassword = localStorage.getItem("password");
 
     // ถ้ามีข้อมูลใน localStorage ให้นำมาเก็บใส่ Array of Objects
     if (storedUsername && storedPassword) {
-        
+        users.push({username: storedUsername, password: storedPassword});
     }
 
 
@@ -34,12 +30,18 @@ function checkLogin(event) {
     }
 
     // 4. ดึงค่าที่ผู้ใช้กรอกในฟอร์ม Login ปัจจุบัน
-    
+    const loginUsername = document.forms["myLogin"]["username"].value;
+    const loginPassword = document.forms["myLogin"]["password"].value;
 
     // 5. ใช้ for loop วนหาใน Array ว่ามี username และ password ที่ตรงกับที่เรากรอกหรือไม่
     let isLoginSuccess = false;
 
-    
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].username === loginUsername && users[i].password === loginPassword) {
+            isLoginSuccess = true;
+            break;
+        }
+    }
 
 
     // 6. ตรวจสอบผลลัพธ์จากการวนลูป

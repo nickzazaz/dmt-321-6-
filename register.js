@@ -6,7 +6,7 @@
 window.onload = pageLoad;
 
 function pageLoad() {
-    
+    document.getElementById("myRegister").onsubmit = validateForm;
 }
 
 function validateForm(event) {
@@ -17,19 +17,25 @@ function validateForm(event) {
     const retypePassword = passwords[1].value;
 
     // 1. ตรวจสอบว่า Password ทั้ง 2 ช่องตรงกันหรือไม่ ถ้าไม่ตรงกันให้แจ้งเตือน และให้return false
-    
+    if (password !== retypePassword) {
+        errorMsg.innerHTML = "รหัสผ่านไม่ตรงกัน";
+        event.preventDefault(); // หยุดการเปลี่ยนหน้า
+        return false;
+    }
 
     // 2. เคลียร์ข้อความแจ้งเตือนถ้าผ่านการตรวจสอบ
     errorMsg.innerHTML = "";
 
     // 3. บันทึกข้อมูลลงใน localStorage ทีละตัว
     // เพื่อความปลอดภัย: รหัสผ่านไม่ปรากฏบน Browser Address Bar และ Browser History
+    localStorage.setItem("username", username);
+    localStorage.setItem("password", password);
     
 
     alert("ลงทะเบียนสำเร็จ! ระบบบันทึกข้อมูลเรียบร้อย กำลังไปที่หน้า Login");
 
     // 4. นำทางไปหน้า login.html
     event.preventDefault();
-    window.location.href = "index.html";
+    window.location.href = "login.html";
     return true;
 }

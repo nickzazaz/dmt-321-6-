@@ -30,6 +30,6 @@ function validateForm(event) {
 
     // 4. นำทางไปหน้า login.html
     event.preventDefault();
-    window.location.href = "login.html";
+    window.location.href = "index.html";
     return true;
 }
